@@ -1,6 +1,5 @@
 var express = require("express");
 var router  = express.Router();
-
 var routes = {
   views: {
     index: require("./views/index")
@@ -8,6 +7,8 @@ var routes = {
 }
 
 router.get("/", routes.views.index.index);
+router.post("/verify",routes.views.index.verify);
+
 
 // router.get("/login",routes.views.index.login);
 // router.get("/store", routes.views.index.store);
