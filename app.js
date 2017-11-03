@@ -30,6 +30,17 @@ app.use(session({
 app.set("view engine", "ejs");
 app.use("/", routes);
 
+
+//middleware
+var isauthenticated = function(req,res,next){
+	
+}
+
 app.listen(process.env.port,function(){
 	console.log("Listening On port " + process.env.port);
 })
+
+
+//SQL LOCK TRANSACTION , CHECK IF INTERNALLY PRESENT.
+//DATA PORTAL ERRORS @ ENTERING
+//TRIAL DATE 09/11
