@@ -7,7 +7,11 @@ var routes = {
 }
 
 router.get("/", routes.views.index.index);
+router.post("/initials", routes.views.index.initials);
 router.post("/verify",routes.views.index.verify);
+router.post("/edit",routes.views.index.edit);
+router.get("/feedback",routes.views.index.feedback);
+//router.post("/home",routes.views.index.home);
 
 
 // router.get("/login",routes.views.index.login);
