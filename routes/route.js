@@ -6,36 +6,24 @@ var routes = {
   }
 }
 
+var isauthenticated = function(req,res,next){
+	if(req.session.student&&req.session.student.token==req.headers.token){
+		console.log("++++++Authenticated+++++++");
+			next();
+	}
+	else
+	{
+		console.log("Not Authenticated");
+		res.send("Not Authenticated");
+	}
+}
+
 router.get("/", routes.views.index.index);
 router.post("/initials", routes.views.index.initials);
 router.post("/verify",routes.views.index.verify);
-router.post("/edit",routes.views.index.edit);
-router.get("/feedback",routes.views.index.feedback);
-//router.post("/home",routes.views.index.home);
-
-
-// router.get("/login",routes.views.index.login);
-// router.get("/store", routes.views.index.store);
-// router.get("/list", routes.views.index.list);
-// router.get("/view.html", routes.views.index.viewstatic);
-
-// //Prescription List:
-// router.get("/prescription/:id", routes.views.index.prescription);
-// router.get("/report/:id", routes.views.index.report);
-// router.get("/prescriptionone/:id1/:id2", routes.views.index.prescriptionone);
-
-// //Add Prescrription
-// router.get("/addprescription/:id", routes.views.index.addprescription);
-// router.post("/addprescription/:id", routes.views.index.Addprescription);
-// router.get("/addreport/:id", routes.views.index.addreport);
-// router.post("/addreport/:id",routes.views.index.Addreport);
-
-// //Verify Image
-// router.get("/verify", routes.views.index.verify);
-// router.post("/verify", upload.any(), routes.views.index.verifyPost);
-
-// router.get("/welcome", routes.views.index.welcome);
-// router.get("/loginsignup", routes.views.index.loginsignup);
-// router.get("/reports", routes.views.index.reports);
+router.post("/dashboard",isauthenticated,routes.views.index.dashboard);
+router.post("/edit",isauthenticated,routes.views.index.edit);
+router.get("/feedbackform",isauthenticated,routes.views.index.feedbackform);
+router.post("/feedback",routes.views.index.feedback);
 
 module.exports = router;

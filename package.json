@@ -4,6 +4,7 @@
   "description": "This is a faculty feedback system",
   "main": "app.js",
   "dependencies": {
+    "async": "^2.5.0",
     "b": "^2.0.1",
     "bcrypt": "^1.0.3",
     "bcrypt-nodejs": "0.0.3",

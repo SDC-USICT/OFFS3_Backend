@@ -24,17 +24,13 @@ app.use(session({
     		cookie:{
     		},
     		rolling: true,
-    		unset: 'destroy' 
-  }));
-
+    		unset: 'destroy'   }));
 app.set("view engine", "ejs");
 app.use("/", routes);
 
 
 //middleware
-var isauthenticated = function(req,res,next){
-	
-}
+
 
 app.listen(process.env.port,function(){
 	console.log("Listening On port " + process.env.port);

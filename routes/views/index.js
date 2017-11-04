@@ -1,12 +1,13 @@
 var con 	   = require("../../models/mysql"),
  	ses        =   require('node-ses'),
+ 	async      =  require('async'),
  	controller = require("../../models/config");
 
 module.exports = {
 
 	index: function (req, res) {
-
-		res.send("Home Page");
+		res.send(req.headers.token);
+		console.log(req.sessionID);
 	},
 	initials:function(req,res) {
 		//college_name.   //enrollment_number.    //email.     //type   //semester
@@ -64,12 +65,14 @@ module.exports = {
 					' from ' + tablename +' where enrollment_no = ' + req.session.temp.enrollment_no;
 		con.query(query,function(err,result){
 			if(err)
-				console.log(err);
+				{console.log(err);
+					res.send("Error in sql");
+				}
 			else
 			{
 				if(req.query.password!=result[0].password)
-				{
-					console.log("Password Did Not Match");
+				{	console.log("Password Did Not match");
+					res.send("Password Did Not Match");
 				}
 				else{		
 						  
@@ -89,7 +92,8 @@ module.exports = {
 													      			req.session.student=user;
 													      			//rconsole.log("okay");                                                                             
 													      			//rconsole.log(random.toString());	
-													      			res.send(req.session.student);
+													      			//res.send(req.session.student);
+													      			res.send(token.toString());
 
 
 
@@ -100,6 +104,9 @@ module.exports = {
 
 
 
+	},
+	dashboard:function(req,res){
+		res.send(req.session.user);
 	},
 	edit:function(req,res){
 		var student = {
@@ -144,7 +151,7 @@ module.exports = {
 //inner JOIN usbas_batch_allocation as b
 //on s.batch_id = b.batch_id 
 //where b.semester = 1 
-	feedback:function(req,res){
+	feedbackform:function(req,res){
 		var college_name = req.session.temp.college_name;
 		var tablename = college_name + '_batch_allocation';
 		var tablename2 =  college_name + '_subject_allocation';				
@@ -157,21 +164,43 @@ module.exports = {
 				res.send(result)
 		})
 
+	},
+	feedback:function(req,res){
+		//var tablename = req.session.temp.college_name + '_feedback_' + process.env.year;
+		tablename = 'usbas_feedback_2016';
+		// console.log(tablename);
+		// var feedbacks = req.body;
+		// console.log(feedbacks);
+		 		// async.each(feedbacks,function(feedback,callback){
+				// 	console.log(feedback);
+				// var query='update '+ tablename+
+				//           ' set at_1 = concat(at_1,?),at_2 = concat(at_2,?),at_3 = concat(at_3,?) where feedback_id = ' 
+				// 	      +feedback.fid;
+				// var result = feedback.result;
+				// con.query(query,[result[0],result[1],result[2]],function(err,result){
+				// 	if(err)
+				// 		console.log(err);
+				// 	else
+				// 		console.log(result);
+				// })
+				// callback();
+				// },function(err){
+				// 	console.log("OKay");
+				// })
+
+	var abc =null;
+	var def =abc;
+	var x = concat(abc,def);
+	res.send(x);
+
 	}
 
 
 
 
 
-}
-
-													      	// con.query(query1,[req.query.enrollment_no],function(err2,result2){
-													      	// 	if(err2)
-													      	// 		console.log(err2);
-													      	// 	else
-													      	// 		{
-
-													      	// 			
-													      	// 		}
-
-													      	// })
+ }
+// UPDATE usbas_feedback_2016 
+// SET at_1 =concat(at_1,3)
+// WHERE feedback_id=1;
+//
