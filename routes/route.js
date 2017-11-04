@@ -24,6 +24,6 @@ router.post("/verify",routes.views.index.verify);
 router.post("/dashboard",isauthenticated,routes.views.index.dashboard);
 router.post("/edit",isauthenticated,routes.views.index.edit);
 router.get("/feedbackform",isauthenticated,routes.views.index.feedbackform);
-router.post("/feedback",routes.views.index.feedback);
+router.post("/feedback",isauthenticated,routes.views.index.feedback);
 
 module.exports = router;

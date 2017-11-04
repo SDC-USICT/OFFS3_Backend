@@ -166,8 +166,8 @@ module.exports = {
 
 	},
 	feedback:function(req,res){
-		//var tablename = req.session.temp.college_name + '_feedback_' + process.env.year;
-		tablename = 'usbas_feedback_2016';
+		var tablename = req.session.temp.college_name + '_feedback_' + process.env.year;
+		//tablename = 'usbas_feedback_2016';
 		console.log(tablename);
 		var feedbacks = req.body;
 		console.log(feedbacks);
