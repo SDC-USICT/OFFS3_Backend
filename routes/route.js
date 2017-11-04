@@ -7,7 +7,7 @@ var routes = {
 }
 
 var isauthenticated = function(req,res,next){
-	if(req.session.student&&req.session.student.token==req.headers.token){
+	if(req.session.student&&req.session.student.token==req.headers.token) {
 		console.log("++++++Authenticated+++++++");
 			next();
 	}
@@ -21,7 +21,7 @@ var isauthenticated = function(req,res,next){
 router.get("/", routes.views.index.index);
 router.post("/initials", routes.views.index.initials);
 router.post("/verify",routes.views.index.verify);
-router.post("/dashboard",isauthenticated,routes.views.index.dashboard);
+router.get("/dashboard",isauthenticated,routes.views.index.dashboard);
 router.post("/edit",isauthenticated,routes.views.index.edit);
 router.get("/feedbackform",isauthenticated,routes.views.index.feedbackform);
 router.post("/feedback",isauthenticated,routes.views.index.feedback);

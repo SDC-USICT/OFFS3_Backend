@@ -20,11 +20,20 @@ app.use(session({
 		    secret: 'secret',
     		resave: true,
     		saveUninitialized: true,
-    		store: sessionStore,  
+    		store: sessionStore,
     		cookie:{
     		},
     		rolling: true,
     		unset: 'destroy'   }));
+
+// This is for cross origin resource sharing
+app.use(function(req, res, next) {
+	res.header('Access-Control-Allow-Origin', "*");
+	res.header('Access-Control-Allow-Methods', "GET, PUT, POST DELETE");
+	res.header('Access-Control-Allow-Headers', 'Content-Type');
+	next();
+})
+
 app.set("view engine", "ejs");
 app.use("/", routes);
 
