@@ -42,15 +42,15 @@ module.exports = {
 					    if(err1) {
 					      console.log(err1);
 					    } else {
-						      var temp = {
-						      	tablename : tablename,
-						      	college_name : req.query.college_name,
-						      	enrollment_no : req.query.enrollment_no,
-						      	semester : req.query.semester
+						      // var temp = {
+						      // 	tablename : tablename,
+						      // 	college_name : req.query.college_name,
+						      // 	enrollment_no : req.query.enrollment_no,
+						      // 	semester : req.query.semester
 
-						      }
-						      req.session.temp = temp;
-						      console.log(req.session.temp);
+						      // }
+						      // req.session.temp = temp;
+						      // console.log(req.session.temp);
 						      res.send("200");
 
 						      }
@@ -63,57 +63,69 @@ module.exports = {
 	},
 	verify: function(req,res){
 
-		var token  = Math.floor(Math.random()*(98989 - 12345 + 1) + 12345 );
-		var tablename = req.session.temp.tablename;
-
-		console.log("++++++++++++++++++++");
-		console.log(req.session.temp);
-		console.log("++++++++++++++++++++");
+		// var token  = Math.floor(Math.random()*(98989 - 12345 + 1) + 12345 );
+		var tablename = req.query.tablename + '_' + process.env.year;
+		var enrollment_no = req.query.enrollment_no;
+		var password = req.query.password;
 
 		var query = ' select password,name,email,course,stream,enrollment_no,year_of_admission,phone'+
-					' from ' + tablename +' where enrollment_no = ' + req.session.temp.enrollment_no;
-		con.query(query,function(err,result){
+					' from ' + tablename +' where enrollment_no = ' + enrollment_no;
+		con.query(query, function(err,result) {
 			if(err) {
 					console.log(err);
 					res.status(400);
 			}
 			else {
-				if(req.query.password!=result[0].password)
+				if(password!=result[0].password)
 				{
 					console.log("Password Did Not match");
 					res.status(400);
 				}
-				else{
+				else {
 
+					// var user = {
+					//     name  : result[0].name,
+					// 	email : result[0].email,
+	  		// 			course:result[0].course,
+					//    	stream:result[0].stream,
+					// 	enrollment_no:result[0].enrollment_no,
+	  		// 			year: result[0].year_of_admission,
+	  		// 			phone: result[0].phone,
+					//     token:token,
+					//     semester:req.session.temp.semester
+	  		// 		}
+			  // 			//console.log(user);
+			  // 			req.session.student=user;
+			  			//rconsole.log("okay");
+			  			//rconsole.log(random.toString());
+			  			//res.send(req.session.student);
+			  			console.log(result);
+			  			var Userinfo = {
+			  				enrollment_no: result.enrollment_no,
+			  				tablename : tablename
+			  			}
+			  			res.json(Userinfo);
 
-				var user = {
-				    name  : result[0].name,
-					email : result[0].email,
-  					course:result[0].course,
-				   	stream:result[0].stream,
-					enrollment_no:result[0].enrollment_no,
-  					year: result[0].year_of_admission,
-  					phone: result[0].phone,
-				    token:token,
-				    semester:req.session.temp.semester
-				      				}
-				      			//console.log(user);
-				      			req.session.student=user;
-				      			//rconsole.log("okay");
-				      			//rconsole.log(random.toString());
-				      			//res.send(req.session.student);
-				      			res.json(token.toString());
-
-					}
+				}
 			}
 		})
-
-
-
 	},
-	dashboard:function(req,res){
 
-		res.json(req.session.user);
+	dashboard:function(req,res) {
+		var enrollment_no = req.query.enrollment_no;
+		var tablename = req.query.tablename;
+
+		var query = 'select * from ' + tablename + ' where enrollment_no = ' + enrollment_no;
+		con.query(query, function(err, result) {
+			if (err) {
+				console.log(err);
+				return;
+			}
+
+			res.json(result);
+		})
+
+		// res.json(req.session.user);
 	},
 
 	edit:function(req,res){
