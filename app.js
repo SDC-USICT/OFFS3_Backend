@@ -25,7 +25,6 @@ app.use(session({
     		},
     		rolling: true,
     		unset: 'destroy'   }));
-
 // This is for cross origin resource sharing
 app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', "*");

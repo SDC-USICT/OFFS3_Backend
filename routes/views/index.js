@@ -59,13 +59,17 @@ module.exports = {
 
 				}
 
-
 		})
 	},
 	verify: function(req,res){
 
 		var token  = Math.floor(Math.random()*(98989 - 12345 + 1) + 12345 );
 		var tablename = req.session.temp.tablename;
+
+		console.log("++++++++++++++++++++");
+		console.log(req.session.temp);
+		console.log("++++++++++++++++++++");
+
 		var query = ' select password,name,email,course,stream,enrollment_no,year_of_admission,phone'+
 					' from ' + tablename +' where enrollment_no = ' + req.session.temp.enrollment_no;
 		con.query(query,function(err,result){
