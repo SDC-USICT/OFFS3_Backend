@@ -7,7 +7,7 @@ var con 	   = require("../../models/mysql"),
 module.exports = {
 
 	index: function (req, res) {
-	
+
 },
 	initials:function(req,res) {
 		//college_name.   //enrollment_number.    //email.     //type   //semester
@@ -33,9 +33,9 @@ else
 						res.json("400");
 					}
 					else {
-							
-		
-							nodemailer.createTestAccount((err, account) => {	
+
+
+							nodemailer.createTestAccount((err, account) => {
 							var transporter = nodemailer.createTransport({
 							  service: 'gmail',
 							  auth: {
@@ -43,14 +43,14 @@ else
 							    pass: process.env.password,
 							  }
 							});
-								
+
 							var mailOptions = {
 							  from: process.env.email,
 							  to: req.query.email,
 							  subject: 'Noreply@ffs',
-							  text: 'Hi  <br> Please Use this OTP : ' +random 
+							  text: 'Hi  <br> Please Use this OTP : ' +random
 							};
-		
+
 							transporter.sendMail(mailOptions, function(error, info){
 							  if (error) {
 							    console.log(error);
@@ -58,14 +58,14 @@ else
 							    console.log('Email sent: ' + info.response);
 							    res.send("200");
 							  }
-							}); 
-		
 							});
-		
-		
-		
+
+							});
+
+
+
 						}
-		
+
 				})}
 	},
 	verify: function(req,res){
@@ -113,14 +113,14 @@ else
 dashboard:function(req,res) {
 		var enrollment_no = Number(req.query.enrollment_no);
 		var tablename = req.query.tablename;
-		
+
 if(req.query.tablename==null||req.query.enrollment_no==null)
 		{
 			console.log("Not all fields set");
 				}
 		else
 		{
-		
+
 		var query = 'select * from ' + tablename + ' where enrollment_no = ' + enrollment_no;
 		con.query(query, function(err, result) {
 			if (err) {
@@ -137,11 +137,11 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 
 	edit:function(req,res){
 			var phone=req.query.phone;
-		
+
 		var tablename = req.query.tablename;
 
 		if(tablename&&phone){
-				
+
 	var query = ' update  ' + tablename + ' set phone=?'+ ' where enrollment_no = ' + req.query.enrollment_no;
     console.log(query);
     con.query(query,[phone],function(err,result){
@@ -165,7 +165,7 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 	feedbackform:function(req,res) {
 		//console.log();
 		if(req.query.course&&req.query.stream&&req.query.semester&&req.query.college_name)
-		{       
+		{
 			    console.log(req.query.course, req.query.stream, req.query.semester,req.query.college_name);
 				var college_name 	= req.query.college_name;
 				var tablename1 		= college_name + '_subject_allocation';
@@ -178,9 +178,9 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 				};
 				var query = ' select s.feedback_id,s.batch_id,s.subject_code,s.instructor_code, ' +
 				            ' s.subject_name,s.type,b.course,b.stream,b.semester,t.name as teacher '+
-							' from usap_subject_allocation as s ' + 
-							' inner join usap_batch_allocation as b on s.batch_id = b.batch_id ' + 
-							' inner join employee as t on t.instructor_id = s.instructor_code ' +
+							' from ' + tablename1 + ' as s ' +
+							' inner join ' + tablename2 + ' as b on s.batch_id = b.batch_id ' +
+							' inner join ' + tablename3 + 'as t on t.instructor_id = s.instructor_code ' +
 							' where b.course=? and b.stream =? and b.semester = ?'
 							console.log(query);
 				con.query(query,[student.course,student.stream,student.semester],function(err,result) {
@@ -190,7 +190,7 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 					}
 					else {
 						console.log(result);
-		
+
 						res.json(result)
 					}
 				})
@@ -205,7 +205,8 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 
 	feedback:function(req,res) {
 
-		
+
+
 		var tablename = req.query.college_name + '_feedback_' + process.env.year;
 		var feedbacks = req.body;
 		console.log(req.query);
@@ -218,7 +219,7 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 		{
 					console.log(tablename);
 					console.log(feedbacks);
-			
+
 			 		async.each(feedbacks,function(feedback,callback) {
 					console.log(feedback);
 
@@ -240,7 +241,7 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 					{   console.log(result[i]);
 						sum=sum +Number(result[i]);
 					}
-			
+
 					con.query(query,[result[0],result[1],result[2],result[3],result[4],result[5],result[6],result[7],result[8],result[9],result[10],result[11],result[12],result[13],result[14],sum],function(err,result){
 						if(err)
 							console.log(err);
@@ -274,7 +275,7 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 					})
 						}
 
-			
+
 					callback();
 					}, function(err) {
 						if (err){
@@ -282,7 +283,7 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 							res.status(err);
 						}
 						else{
-							   nodemailer.createTestAccount((err, account) => {	
+							   nodemailer.createTestAccount((err, account) => {
 								var transporter = nodemailer.createTransport({
 								  service: 'gmail',
 								  auth: {
@@ -290,14 +291,14 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 								    pass: process.env.password,
 								  }
 								});
-									
+
 								var mailOptions = {
 								  from: process.env.email,
 								  to: req.query.email,   //Require user email at last as well
 								  subject: 'Noreply@ffs',
 								  text: 'Thank You For Your feedback.'
 								};
-			
+
 								transporter.sendMail(mailOptions, function(error, info){
 								  if (error) {
 								    console.log(error);
@@ -305,13 +306,13 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 								    console.log('Email sent: ' + info.response);
 								    res.send("200");
 								  }
-								}); 
-			
+								});
+
 								});
 						}
-						
+
 					})
-			
+
 			}
 	}
 
