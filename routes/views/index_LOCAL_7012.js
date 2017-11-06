@@ -199,7 +199,6 @@ module.exports = {
 //inner JOIN usbas_batch_allocation as b
 //on s.batch_id = b.batch_id
 //where b.semester = 1
-<<<<<<< HEAD
 	feedbackform:function(req,res){
 		// var college_name = req.session.temp.college_name;
 		// var tablename = college_name + '_batch_allocation';
@@ -217,19 +216,11 @@ module.exports = {
 		// })
 
 		var college_name 	= "usap";
-=======
-	feedbackform:function(req,res) {
-		console.log();
-		console.log(req.query.course, req.query.stream, req.query.semester);
-
-		var college_name 	= req.query.college_name;
->>>>>>> a8b4d1f2f582aa45ac56debfdd1b3457f9dee5d2
 		var tablename 		= college_name + '_batch_allocation';
 		var tablename2 		= college_name + '_subject_allocation';
 
 
 		var student = {
-<<<<<<< HEAD
 			course: "B.Arch",
 			stream: "Section A",
 			semester: "3"
@@ -238,15 +229,6 @@ module.exports = {
 		var query = 'select * from ' +tablename2+' as s inner join ' + tablename +
 					' as b on s.batch_id = b.batch_id where b.course=? and b.stream =? and b.semester = ?'
 		console.log(query);
-=======
-			course	: 	req.query.course,
-			stream	: 	req.query.stream,
-			semester: 	req.query.semester
-		};
-
-		var query = 'select * from ' +tablename2+' as s inner join ' + tablename +
-					' as b on s.batch_id = b.batch_id where b.course=? and b.stream = ? and b.semester = ?  '
->>>>>>> a8b4d1f2f582aa45ac56debfdd1b3457f9dee5d2
 		con.query(query,[student.course,student.stream,student.semester],function(err,result) {
 			if(err) {
 				console.log(err);
@@ -254,10 +236,6 @@ module.exports = {
 			}
 			else {
 				console.log(result);
-<<<<<<< HEAD
-=======
-
->>>>>>> a8b4d1f2f582aa45ac56debfdd1b3457f9dee5d2
 				res.json(result)
 			}
 		})

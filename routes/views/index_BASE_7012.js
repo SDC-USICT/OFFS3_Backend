@@ -1,19 +1,22 @@
 var con 	   = require("../../models/mysql"),
  	ses        =   require('node-ses'),
  	async      =  require('async'),
- 	controller = require("../../models/config"),
-     nodemailer = require('nodemailer');
+ 	controller = require("../../models/config");
 
 module.exports = {
 
 	index: function (req, res) {
-	
-},
+		con.query('select * from usbas_student_2016 ',function(err,result){
+			if(err)
+				console.log(err);
+			else
+				res.send(result);
+		});
+	},
+
 	initials:function(req,res) {
 		//college_name.   //enrollment_number.    //email.     //type   //semester
 		//By default email set to sjv97mhjn@gmail.com
-
-		console.log(req.query);
 		console.log(req.query.college_name + ' ' + req.query.type + ' ' + process.env.year);
 
 		var tablename = req.query.college_name + '_' + req.query.type + '_' + process.env.year;
@@ -28,61 +31,31 @@ module.exports = {
 				res.json("400");
 			}
 			else {
-					// var  client = ses.createClient({key:process.env.key , secret: process.env.secret });
-					// client.sendEmail({
-					//     to: req.query.email,
-					//     from: process.env.email,
-					//     subject: 'noreply@ffs',
-					//     message: 'Hi  <br> Please Use this OTP : ' +random ,
-					//     altText: 'plain text'
-					// }, function (err1, data, res1) {
-					//     if(err1) {
-					//       console.log(err1);
-					//     } else {
-					// 	      // var temp = {
-					// 	      // 	tablename : tablename,
-					// 	      // 	college_name : req.query.college_name,
-					// 	      // 	enrollment_no : req.query.enrollment_no,
-					// 	      // 	semester : req.query.semester
+					var  client = ses.createClient({key:process.env.key , secret: process.env.secret });
+					client.sendEmail({
+					    to: req.query.email,
+					    from: process.env.email,
+					    subject: 'noreply@ffs',
+					    message: 'Hi  <br> Please Use this OTP : ' +random ,
+					    altText: 'plain text'
+					}, function (err1, data, res1) {
+					    if(err1) {
+					      console.log(err1);
+					    } else {
+						      // var temp = {
+						      // 	tablename : tablename,
+						      // 	college_name : req.query.college_name,
+						      // 	enrollment_no : req.query.enrollment_no,
+						      // 	semester : req.query.semester
 
-					// 	      // }
-					// 	      // req.session.temp = temp;
-					// 	      // console.log(req.session.temp);
-					// 	      res.send("200");
+						      // }
+						      // req.session.temp = temp;
+						      // console.log(req.session.temp);
+						      res.send("200");
 
-					// 	      }
-					// 		 // ...
-					// });
-
-										nodemailer.createTestAccount((err, account) => {
-						
-					var transporter = nodemailer.createTransport({
-					  service: 'gmail',
-					  auth: {
-					    user: 'sjv97mhjn@gmail.com',
-					    pass: 'Sambar@Dosa',
-					  }
+						      }
+							 // ...
 					});
-						
-					var mailOptions = {
-					  from: 'sjv97mhjn@gmail.com',
-					  to: req.query.email,
-					  subject: 'Noreply@ffs',
-					  text: 'Hi  <br> Please Use this OTP : ' +random 
-					};
-
-					transporter.sendMail(mailOptions, function(error, info){
-					  if (error) {
-					    console.log(error);
-					  } else {
-					    console.log('Email sent: ' + info.response);
-					    res.send("200");
-					  }
-					}); 
-
-					});
-
-
 
 				}
 
@@ -199,74 +172,25 @@ module.exports = {
 //inner JOIN usbas_batch_allocation as b
 //on s.batch_id = b.batch_id
 //where b.semester = 1
-<<<<<<< HEAD
 	feedbackform:function(req,res){
-		// var college_name = req.session.temp.college_name;
-		// var tablename = college_name + '_batch_allocation';
-		// var tablename2 =  college_name + '_subject_allocation';
-		// var query = 'select * from ' +tablename2+' as s inner join ' + tablename +
-		// 			' as b on s.batch_id = b.batch_id where b.course=? and b.stream = ? and b.semester = ?  '
-		// con.query(query,[req.session.student.course,req.session.student.stream,req.session.student.semester.toString()],function(err,result){
-		// 	if(err) {
-		// 		console.log(err);
-		// 		res.status(400);
-		// 	}
-		// 	else {
-		// 		res.json(result)
-		// 	}
-		// })
-
-		var college_name 	= "usap";
-=======
-	feedbackform:function(req,res) {
-		console.log();
-		console.log(req.query.course, req.query.stream, req.query.semester);
-
-		var college_name 	= req.query.college_name;
->>>>>>> a8b4d1f2f582aa45ac56debfdd1b3457f9dee5d2
-		var tablename 		= college_name + '_batch_allocation';
-		var tablename2 		= college_name + '_subject_allocation';
-
-
-		var student = {
-<<<<<<< HEAD
-			course: "B.Arch",
-			stream: "Section A",
-			semester: "3"
-		};
-
-		var query = 'select * from ' +tablename2+' as s inner join ' + tablename +
-					' as b on s.batch_id = b.batch_id where b.course=? and b.stream =? and b.semester = ?'
-		console.log(query);
-=======
-			course	: 	req.query.course,
-			stream	: 	req.query.stream,
-			semester: 	req.query.semester
-		};
-
+		var college_name = req.session.temp.college_name;
+		var tablename = college_name + '_batch_allocation';
+		var tablename2 =  college_name + '_subject_allocation';
 		var query = 'select * from ' +tablename2+' as s inner join ' + tablename +
 					' as b on s.batch_id = b.batch_id where b.course=? and b.stream = ? and b.semester = ?  '
->>>>>>> a8b4d1f2f582aa45ac56debfdd1b3457f9dee5d2
-		con.query(query,[student.course,student.stream,student.semester],function(err,result) {
+		con.query(query,[req.session.student.course,req.session.student.stream,req.session.student.semester.toString()],function(err,result){
 			if(err) {
 				console.log(err);
 				res.status(400);
 			}
 			else {
-				console.log(result);
-<<<<<<< HEAD
-=======
-
->>>>>>> a8b4d1f2f582aa45ac56debfdd1b3457f9dee5d2
 				res.json(result)
 			}
 		})
 
-
 	},
 
 	feedback:function(req,res) {
-
 		var tablename = req.session.temp.college_name + '_feedback_' + process.env.year;
 		//tablename = 'usbas_feedback_2016';
 		console.log(tablename);
@@ -304,36 +228,8 @@ module.exports = {
 				console.error(err);
 				res.status(err);
 			}
-			else{
-										nodemailer.createTestAccount((err, account) => {
-						
-					var transporter = nodemailer.createTransport({
-					  service: 'gmail',
-					  auth: {
-					    user: 'sjv97mhjn@gmail.com',
-					    pass: 'Sambar@Dosa',
-					  }
-					});
-						
-					var mailOptions = {
-					  from: 'sjv97mhjn@gmail.com',
-					  to: req.query.email,   //Require user email at last as well
-					  subject: 'Noreply@ffs',
-					  text: 'Thank You For feedback.'
-					};
-
-					transporter.sendMail(mailOptions, function(error, info){
-					  if (error) {
-					    console.log(error);
-					  } else {
-					    console.log('Email sent: ' + info.response);
-					    res.send("200");
-					  }
-					}); 
-
-					});
-			}
-			
+			console.log("OKay");
+			res.status(200)
 		})
 
 
