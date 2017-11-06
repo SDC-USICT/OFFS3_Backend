@@ -172,18 +172,31 @@ module.exports = {
 //inner JOIN usbas_batch_allocation as b
 //on s.batch_id = b.batch_id
 //where b.semester = 1
-	feedbackform:function(req,res){
-		var college_name = req.session.temp.college_name;
-		var tablename = college_name + '_batch_allocation';
-		var tablename2 =  college_name + '_subject_allocation';
+	feedbackform:function(req,res) {
+		console.log();
+		console.log(req.query.course, req.query.stream, req.query.semester);
+
+		var college_name 	= req.query.college_name;
+		var tablename 		= college_name + '_batch_allocation';
+		var tablename2 		= college_name + '_subject_allocation';
+
+
+		var student = {
+			course	: 	req.query.course,
+			stream	: 	req.query.stream,
+			semester: 	req.query.semester
+		};
+
 		var query = 'select * from ' +tablename2+' as s inner join ' + tablename +
 					' as b on s.batch_id = b.batch_id where b.course=? and b.stream = ? and b.semester = ?  '
-		con.query(query,[req.session.student.course,req.session.student.stream,req.session.student.semester.toString()],function(err,result){
+		con.query(query,[student.course,student.stream,student.semester],function(err,result) {
 			if(err) {
 				console.log(err);
 				res.status(400);
 			}
 			else {
+				console.log(result);
+
 				res.json(result)
 			}
 		})

@@ -16,8 +16,15 @@ var routes = {
 // 		console.log("Not Authenticated");
 // 		res.send("Not Authenticated");
 // 	}
+
 // }
 
+
+
+
+	/*v
+	jisko user feedback dena chahta hai uski feedback id  he bhejni hai apne backend mei
+	*/
 router.get("/", routes.views.index.index);
 router.post("/initials", routes.views.index.initials);
 router.post("/verify", routes.views.index.verify);
