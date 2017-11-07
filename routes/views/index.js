@@ -12,6 +12,7 @@ module.exports = {
 	initials:function(req,res) {
 		//college_name.   //enrollment_number.    //email.     //type   //semester
 		//By default email set to sjv97mhjn@gmail.com
+
 if(req.query.college_name==null||req.query.enrollment_no==null||req.query.email==null||req.query.type==null)
 {  console.log("Not all Fields Set");
 	res.send("400");}
@@ -28,7 +29,7 @@ else
 						res.send("400");                      // SQL ERROR
 					}
 					else if(result.changedRows==0) {
-						console.log('No User Found');         // No User Found
+						console.ltablenameog('No User Found');         // No User Found
 						res.json("400");
 					}
 					else {
@@ -126,7 +127,8 @@ dashboard:function(req,res) {
 				console.log(err);
 				return;
 			}
-
+			console.log("@DAshboard");
+			console.log(result);
 			res.json(result);
 		})
 			}
@@ -176,9 +178,9 @@ dashboard:function(req,res) {
 				};
 				var query = ' select s.feedback_id,s.batch_id,s.subject_code,s.instructor_code, ' +
 				            ' s.subject_name,s.type,b.course,b.stream,b.semester,t.name as teacher '+
-							' from usap_subject_allocation as s ' +
-							' inner join usap_batch_allocation as b on s.batch_id = b.batch_id ' +
-							' inner join usap_teacher as t on t.instructor_id = s.instructor_code ' +
+							' from ' + tablename1 + ' as s ' +
+							' inner join ' + tablename2 + ' as b on s.batch_id = b.batch_id ' +
+							' inner join ' + tablename3 + 'as t on t.instructor_id = s.instructor_code ' +
 							' where b.course=? and b.stream =? and b.semester = ?'
 							console.log(query);
 				con.query(query,[student.course,student.stream,student.semester],function(err,result) {
