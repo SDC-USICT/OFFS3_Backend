@@ -12,13 +12,17 @@ module.exports = {
 	initials:function(req,res) {
 		//college_name.   //enrollment_number.    //email.     //type   //semester
 		//By default email set to sjv97mhjn@gmail.com
-console.log(req.query);
+	console.log(req.query);
 if(req.query.college_name==null||req.query.enrollment_no==null||req.query.email==null||req.query.type==null)
 {  console.log("Not all Fields Set");
 	res.send("400");}
 else
-		{                console.log(req.query);
-				var tablename = req.query.college_name + '_' + req.query.type + '_' + process.env.year;
+		{       	var year = (req.query.enrollment_no.substr(req.query.enrollment_no.length-2,2));	
+					year = '20' + year.toString();
+					console.log(year);
+				console.log(req.query.enrollment_no.substr(10,12));
+				console.log(req.query);
+				var tablename = req.query.college_name + '_' + req.query.type + '_' + year;
 				var random = Math.floor(Math.random()*(98989 - 12345 + 1) + 12345 );
 				var query  = ' update '+ tablename +' set password = ' +random.toString() +
 							 ', email= ? ' +
@@ -29,7 +33,7 @@ else
 						res.send("400");                      // SQL ERROR
 					}
 					else if(result.changedRows==0) {
-						console.ltablenameog('No User Found');         // No User Found
+						console.log('No User Found');         // No User Found
 						res.json("400");
 					}
 					else {
@@ -127,8 +131,7 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 				console.log(err);
 				return;
 			}
-			console.log("@DAshboard");
-			console.log(result);
+
 			res.json(result);
 		})
 			}
@@ -178,9 +181,9 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 				};
 				var query = ' select s.feedback_id,s.batch_id,s.subject_code,s.instructor_code, ' +
 				            ' s.subject_name,s.type,b.course,b.stream,b.semester,t.name as teacher '+
-							' from ' + tablename1 + ' as s ' +
+							' from ' 	   + tablename1 + ' as s ' +
 							' inner join ' + tablename2 + ' as b on s.batch_id = b.batch_id ' +
-							' inner join ' + tablename3 + 'as t on t.instructor_id = s.instructor_code ' +
+							' inner join ' + tablename3 + ' as t on t.instructor_id = s.instructor_code ' +
 							' where b.course=? and b.stream =? and b.semester = ?'
 							console.log(query);
 				con.query(query,[student.course,student.stream,student.semester],function(err,result) {
@@ -237,11 +240,15 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 							   ' total = total + ? ' +
 					          'where feedback_id = ' +feedback.fid;
 					var sum=0;
-					for(i=0;i<15;i++)
-					{   console.log(result[i]);
-						sum=sum +Number(result[i]);
-					}
-
+					for(i=0;i<=14;i++)    //check;
+					{   result[i]=Number(result[i]);
+						if(result[i]>5&&result[i]<1)
+						{	console.log("Incorrect Data");
+							res.send("400");
+						}else{
+						sum=sum+Number(result[i]);
+													}
+					};
 					con.query(query,[result[0],result[1],result[2],result[3],result[4],result[5],result[6],result[7],result[8],result[9],result[10],result[11],result[12],result[13],result[14],sum],function(err,result){
 						if(err)
 							console.log(err);
@@ -262,10 +269,15 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 							   ' total = total + ? ' +
 					          'where feedback_id = ' +feedback.fid;
 					var sum=0;
-					for(i=0;i<=7;i++)
-					{   console.log(result[i]);
+					for(i=0;i<=7;i++)    //check;
+					{   result[i]=Number(result[i]);
+						if(result[i]>5&&result[i]<1)
+						{
+							res.send("Incorrect Data");
+						}else{
 						sum=sum+Number(result[i]);
-					}
+													}
+					};
 					console.log(sum);
 					con.query(query,[result[0],result[1],result[2],result[3],result[4],result[5],result[6],result[7],sum],function(err,result){
 						if(err)
