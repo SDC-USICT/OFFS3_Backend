@@ -118,7 +118,7 @@ dashboard:function(req,res) {
 		var enrollment_no = Number(req.query.enrollment_no);
 		var tablename = req.query.tablename;
 
-if(req.query.tablename==null||req.query.enrollment_no==null)
+		if(req.query.tablename==null||req.query.enrollment_no==null)
 		{
 			console.log("Not all fields set");
 				}
@@ -209,23 +209,23 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 	feedback:function(req,res) {
 
 
+		console.log(req.body);
+		console.log(req.body.teacherFeedback)
 
-		var tablename = req.query.college_name + '_feedback_' + process.env.year;
-		var feedbacks = req.body;
-		console.log(req.query);
-		//tablename = 'usbas_feedback_2016';
+		var tablename = req.body.college_name + '_feedback_' + process.env.year;
+		var feedbacks = req.body.teacherFeedback;
+
+
 		if(tablename==null||feedbacks==null){
 			console.log("Not All Fields set");
 			res.send("400");
 		}
 		else
 		{
-					console.log(tablename);
-					console.log(feedbacks);
 
 			 		async.each(feedbacks,function(feedback,callback) {
-					console.log(feedback);
-
+			 				console.log("Feedbacks")
+			 				console.log(feedback.feedbackId);
 					var result = feedback.score;
 					if(result.length==15)
 						{
@@ -238,7 +238,7 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 							   ' at_13 = concat(at_13,?),at_14 = concat(at_14,?),at_15 = concat(at_15,?) ,'+
 							   ' no_of_students_evaluated =  no_of_students_evaluated + 1 ,'+
 							   ' total = total + ? ' +
-					          'where feedback_id = ' +feedback.fid;
+					          'where feedback_id = ' +feedback.feedbackId;
 					var sum=0;
 					for(i=0;i<=14;i++)    //check;
 					{   result[i]=Number(result[i]);
@@ -267,7 +267,7 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 							   ' at_7 = concat(at_7,?),  at_8 = concat(at_8,?), '+
 							   ' no_of_students_evaluated =  no_of_students_evaluated + 1 ,'+
 							   ' total = total + ? ' +
-					          'where feedback_id = ' +feedback.fid;
+					          'where feedback_id = ' +feedback.feedbackId;
 					var sum=0;
 					for(i=0;i<=7;i++)    //check;
 					{   result[i]=Number(result[i]);
@@ -306,7 +306,7 @@ if(req.query.tablename==null||req.query.enrollment_no==null)
 
 								var mailOptions = {
 								  from: process.env.email,
-								  to: req.query.email,   //Require user email at last as well
+								  to: req.body.email,   //Require user email at last as well
 								  subject: 'Noreply@ffs',
 								  text: 'Thank You For Your feedback.'
 								};
