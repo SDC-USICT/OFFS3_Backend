@@ -29,7 +29,7 @@ else
 						res.send("400");                      // SQL ERROR
 					}
 					else if(result.changedRows==0) {
-						console.ltablenameog('No User Found');         // No User Found
+						console.log('No User Found');         // No User Found
 						res.json("400");
 					}
 					else {
@@ -180,7 +180,7 @@ dashboard:function(req,res) {
 				            ' s.subject_name,s.type,b.course,b.stream,b.semester,t.name as teacher '+
 							' from ' + tablename1 + ' as s ' +
 							' inner join ' + tablename2 + ' as b on s.batch_id = b.batch_id ' +
-							' inner join ' + tablename3 + 'as t on t.instructor_id = s.instructor_code ' +
+							' inner join ' + tablename3 + ' as t on t.instructor_id = s.instructor_code ' +
 							' where b.course=? and b.stream =? and b.semester = ?'
 							console.log(query);
 				con.query(query,[student.course,student.stream,student.semester],function(err,result) {

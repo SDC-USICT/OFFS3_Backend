@@ -1,6 +1,4 @@
-{
-  "name": "facultyfeedbacksystem",
-  "version": "1.0.0",
+{  "version": "1.0.0",
   "description": "This is a faculty feedback system",
   "main": "app.js",
   "dependencies": {
