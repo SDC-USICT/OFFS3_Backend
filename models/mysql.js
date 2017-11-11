@@ -27,7 +27,7 @@ module.exports= con;
 // });
 // //Z3apbUnvi5LQKClu
 // con.connect(function(err){
-//   if(err)
+//   if(err)`
 //     throw err;
 //   console.log("Connected");
 

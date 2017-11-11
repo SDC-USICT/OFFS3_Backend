@@ -7,8 +7,10 @@ var con 	   = require("../../models/mysql"),
 module.exports = {
 
 	index: function (req, res) {
+		res.rendFile("index.html");
 
-},
+	},
+
 	initials:function(req,res) {
 		//college_name.   //enrollment_number.    //email.     //type   //semester
 		//By default email set to sjv97mhjn@gmail.com
@@ -19,9 +21,9 @@ if(req.query.college_name==null||req.query.enrollment_no==null||req.query.email=
 	{  console.log("Not all Fields Set");
 		res.send("400");          }
 			else
-		{       var year = (req.query.enrollment_no.substr(req.query.enrollment_no.length-2,2));	
+		{       var year = (req.query.enrollment_no.substr(req.query.enrollment_no.length-2,2));
 				year = '20' + year.toString();
-				
+
 				console.log(req.query.enrollment_no.substr(10,12));
 				console.log(req.query);
 				var tablename = req.query.college_name + '_' + req.query.type + '_' + year;
@@ -62,7 +64,7 @@ if(req.query.college_name==null||req.query.enrollment_no==null||req.query.email=
 							    console.log(error);
 							  } else {
 							    console.log('Email sent: ' + info.response);
-							  
+
 							    res.send("200");
 							  }
 							});
@@ -86,7 +88,7 @@ if(req.query.college_name==null||req.query.enrollment_no==null||req.query.email=
 				}
 		else
 		{
-		var year = (req.query.enrollment_no.substr(req.query.enrollment_no.length-2,2));	
+		var year = (req.query.enrollment_no.substr(req.query.enrollment_no.length-2,2));
 		year = '20' + year.toString();
 		var tablename = req.query.tablename + '_' + year;
 		console.log(tablename);
@@ -172,7 +174,7 @@ dashboard:function(req,res) {
 		//console.log();
 
 		if(req.query.course&&req.query.stream&&req.query.semester&&req.query.college_name)
-		{		
+		{
 			    console.log(req.query.course, req.query.stream, req.query.semester,req.query.college_name);
 				var college_name 	= req.query.college_name;
 
@@ -185,7 +187,7 @@ dashboard:function(req,res) {
 					semester: 	Number(req.query.semester)
 				};
 				if(process.env.year=='2017')
-				var tablename1 		= college_name + '_subject_allocation' + process.env.year ;	
+				var tablename1 		= college_name + '_subject_allocation' + process.env.year ;
 				var query = ' select s.feedback_id,s.batch_id,s.subject_code,s.instructor_code, ' +
 				            ' s.subject_name,s.type,b.course,b.stream,b.semester,t.name as teacher '+
 							' from ' 	   + tablename1 + ' as s ' +
@@ -219,6 +221,7 @@ dashboard:function(req,res) {
 		var feedbacks = req.body.teacherFeedback;
 
 
+
 		if(tablename==null||feedbacks==null){
 			console.log("Not All Fields set");
 			res.send("400");
@@ -229,7 +232,7 @@ dashboard:function(req,res) {
 			 		async.each(feedbacks,function(feedback,callback) {
 					var result = feedback.score;
 					if(result.length==15&&feedback.feedback_id!=null)
-						{  
+						{
 							var query='update '+ tablename+' set'+
 							   ' at_1 = concat(at_1,?),  at_2 = concat(at_2,?),  at_3 = concat(at_3,?), '  +
 							   ' at_4 = concat(at_4,?),  at_5 = concat(at_5,?),  at_6 = concat(at_6,?), '  +
@@ -254,7 +257,7 @@ dashboard:function(req,res) {
 							console.log(err);
 						else{
 							console.log("feedback id " +feedback.feedback_id + ' of length '+ result.length +' updated ')
-						
+
 						}
 					})
 
@@ -286,7 +289,7 @@ dashboard:function(req,res) {
 							console.log(err);
 						else{
 						  console.log("feedback id " +feedback.feedback_id + ' of length ' + result.length + ' updated ')
-						
+
 						}
 					})
 						}

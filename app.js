@@ -14,7 +14,10 @@ var express 		= require('express'),
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended :true }));
+
 app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/facultyFrontend"));
+
 app.use(methodOverride("_method"));
 app.use(session({
 		    secret: 'secret',
