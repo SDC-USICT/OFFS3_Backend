@@ -45,7 +45,7 @@ app.use("/", routes);
 
 app.listen(80,function() {
 	console.log("Listening On port " + 80);
-}
+});
 
 //SQL LOCK TRANSACTION , CHECK IF INTERNALLY PRESENT.
 //DATA PORTAL ERRORS @ ENTERING
