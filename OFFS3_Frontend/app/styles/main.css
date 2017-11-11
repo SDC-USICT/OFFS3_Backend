@@ -1,0 +1,149 @@
+.emailid-content {
+display: flex;
+padding-left: 2em;
+padding-right: 2em;
+}
+input[type=text]:not(.browser-default) {
+margin: 0.5em 0 0.5em 0;
+
+}
+
+button {
+	color : #1A237E;
+}
+
+.send {
+font-size: 2.5em;
+margin-top: 0.3em;
+color: #00bcd4;
+}
+.fa-check-circle:hover {
+color:  #006064;
+cursor: pointer;
+}
+.icon-background1 {
+color: #ffc0ff;
+}
+.material-icons {
+line-height: 3;
+margin-left: 1em;
+}
+.main{
+display: flex;
+height: 100vh;
+margin:0;
+}
+div {
+flex: 1;
+}
+.heading {
+font-size: 16em;
+font-family: Lato;
+}
+.desc {
+font-size: 1.7em;
+font-weight: 700;
+text-indent: 0.5em;
+}
+.emailid {
+margin-left: 15em;
+margin-right: 15em;
+}
+
+
+#login-page {
+   width: 500px;
+}
+
+// .card {
+//      position: absolute;
+//      left: 50%;
+//      top: 50%;
+//      -moz-transform: translate(-50%, -50%);
+//      -webkit-transform: translate(-50%, -50%);
+//      -ms-transform: translate(-50%, -50%);
+//      -o-transform: translate(-50%, -50%);
+//      transform: translate(-50%, -50%);
+// }
+
+label {
+	font-family: "Roboto";
+
+}
+
+#Signup {
+	width: 34em;
+	margin-top: 2em;
+	// box-shadow: 0 0 0px black;
+}
+
+h4 {
+	color: #1A237E;
+}
+
+#form_button {
+	background-color: #1A237E;
+}
+
+.select_school {
+	position: relative;
+	margin-top: 2.4em;
+}
+
+.school_list {
+}
+
+.single_school:hover {
+	text-decoration: none;
+}
+
+.single_school {
+	width: 40em;
+}
+
+.dropdown-button {
+	width: 40em;
+}
+
+.login_dropdown {
+	margin-top: 2em;
+}
+
+#grad {
+	margin-left: auto;
+    margin-right: auto;
+    width: 77em;
+}
+
+#center-position {
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.btn {
+	background-color: #1A237E !important;
+}
+
+#upload-photo {
+    height: 0;
+    width: 0;
+}
+
+#upload-photo-label {
+    border: 1px solid #cccccc;
+    padding: 5px 30px;
+    font-family:arial;
+    font-size: 13px;
+}
+#upload-photo-label:active{
+    background:#ccc;
+}
+
+.image_groups {
+	height: 25em;
+	width: 25em;
+}
+
+h3 {
+	font-family: ROBERTO;
+}

@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col s4">
+  </div>
+  <div class="col s8">
+
+  <div>
+    <div id="Signup">
+
+
+  <div class="card" id="Signup">
+      <div class="Signup_head" style="height: 3em">
+        <div class="row">
+          <div class="col s2">
+          </div>
+          <div class="col s8">
+            <span>
+              <h4 style = "color: #1A237E"> <strong>Verification</strong></h4>
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="Signup_body">
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="otp" type="text" class="validate" ng-model="otp">
+                <label for="otp"> Enter OTP</label>
+              </div>
+            </div>
+            <div class="row">
+            <div class="g-recaptcha hide" data-sitekey="6LcW-CcUAAAAAMSs6yu89PgIMvFyOT4Bps651gYE"></div>
+              <div class="input-field col s12">
+                <button ng-click="verifyUser()" ng-hide="v1" class="btn waves-effect waves-light" id="form_button" type="submit" name="action">Submit
+                  <i class="material-icons right">send</i>
+                </button>
+              </div>
+              <div ng-show="v2" class="pull-left" id="loaddiv" style="margin: auto; width: 17%;">
+                    <img style="margin-top:5px;" src="./app/resources/images/5.gif" width="60px" />
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<script src='https://www.google.com/recaptcha/api.js'></script>

@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col s4">
+
+  </div>
+
+  <div class="col s8">
+  <div>
+    <div id="Signup">
+      <div class="login_dropdown">
+        <button class='dropdown-button btn btn-primary' id="input_field" data-activates='dropdown1' style="background-color: white !important;color: black; width: 34em">
+            {{ college.collegeName || 'SELECT SCHOOL' }} <span class="caret pull-right">▼</span>
+        </button>
+
+          <ul id='dropdown1' class='dropdown-content' style="background-color: white;color: black; width: 34em">
+            <li><a class="single_school"> Search your college</a></li>
+            <li ng-repeat="singleCollege in collegeList"><a class="single_school" ng-click="setCollege(singleCollege)"> {{ singleCollege.collegeName }}</a></li>
+          </ul>
+      </div>
+
+      <div class="login_dropdown">
+        <button class='dropdown-button btn btn-primary' id="input_field" data-activates='dropdown2' style="background-color: white !important;color: black; width: 34em">
+            {{ user.category || 'CHOOSE AUTHENTICATION MODE' }} <span class="caret pull-right">▼</span>
+        </button>
+
+
+        <div id='dropdown2' class='dropdown-content' style="background-color: white;color: black; width: 34em">
+          <ul class="school_list">
+            <li ng-repeat="userCategory in userCategoryList"><a class="single_school" ng-click="setUserCategory(userCategory)"> {{ userCategory }}</a></li>
+          </ul>
+        </div>
+      </div>
+
+    <div class="card" id="Signup">
+        <div class="Signup_head" style="height: 3em">
+          <div class="row">
+            <div class="col s12">
+              <span>
+                <h4 style = "color: #1A237E; padding-left: 0.5em;"> <strong>{{ user.category }} Login</strong></h4>
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="Signup_body">
+          <div class="row">
+            <form class="col s12">
+              <div class="row">
+                <div class="input-field col s12" ng-if="user.category=='student'">
+                  <input id="rollno" type="text" class="validate" ng-model="user.rollno" ng-blur="findSemister()">
+                  <label for="rollno"> Your 11 Digit Enrollment Number</label>
+                </div>
+                <div class="input-field col s12" ng-if="user.category!=='student'">
+                  <input id="rollno" type="text" class="validate" ng-model="user.rollno">
+                  <label for="rollno"> {{ $scope.audience || 'User Id' }}</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="email" type="text" class="validate" ng-model="user.email">
+                  <label for="email"> Email </label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s4" ng-if="user.category=='student'">
+                  <input placeholder="your semester" id="semister" type="text" class="validate" ng-model="user.semister" ng-blur="updateSemester()">
+                  <label for="semister">Current semester</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="center">Please make sure you are connected to University WiFi / University Network before proceeding.</div>
+              <div class="g-recaptcha hide" data-sitekey="6LcW-CcUAAAAAMSs6yu89PgIMvFyOT4Bps651gYE"></div>
+                <div class="input-field col s12">
+                  <button  ng-click="LoginUser()" ng-hide="hidebutton" class="btn waves-effect waves-light pull-right" id="form_button" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                  </button>
+                </div>
+                <div ng-show="showSpinner" class="pull-right" id="loaddiv" style="margin: auto; width: 17%;">
+                    <img style="margin-top:5px;" src="./app/resources/images/5.gif" width="60px" />
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+ $('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      gutter: 0, // Spacing from edge
+      belowOrigin: false, // Displays dropdown below the button
+      alignment: 'left', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false // Stops event propagation
+    }
+  );
+</script>
+
+<script src='https://www.google.com/recaptcha/api.js'></script>

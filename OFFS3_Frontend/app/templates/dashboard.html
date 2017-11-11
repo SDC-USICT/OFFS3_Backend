@@ -1,0 +1,92 @@
+<br>
+<div class="row">
+    <div >
+    <div id="grad" class="container student-card card">
+    <div class=" card-content row">
+
+        <div class="col s4">
+
+            <div class='greeting'>HELLO</div>
+
+            <div class="student-name"> {{ user.name }}</div>
+
+            <div class="student-enroll"> {{ user.enrollment_no }}</div>
+        </div>
+        <div class="col s4">
+            <center>
+                <img height=100 width=149 id="stud-img" class="student-main-image" src="http://placehold.it/180x200">
+
+                <div style="margin-bottom: 0px !important;" class="row">
+
+                    <form name="name" action="savefile" method="post" enctype="multipart/form-data">
+                        <input class="file-input" id="upload-photo" type='file' name="file" value="file"/>
+                        <label id="upload-photo-label" for="upload-photo" class="custom-file-upload"> Choose Image </label>
+                        <br>
+                        <br>
+                        <input name="submit" class="waves-effect waves-light  btn" type="submit" value="Upload File">
+                    </form>
+                    <div class="form-instructions">FORMAT: your-enrollment-number.jpg
+                    </div>
+                </div>
+            </center>
+
+        </div>
+        <div class="col s4">
+            <a class="logout btn waves-effect waves-light right" ng-click="logout()">LOG OUT </a>
+        </div>
+    </div>
+
+    <div class="card-action">
+        <div class="row">
+
+            <div class="col s3">
+                <div class="small-title">SCHOOL</div>
+
+                <div class="small-content school">{{ user.college_name }}</div>
+
+            </div>
+
+            <div class="col s3">
+                <div class="small-title">COURSE</div>
+                <div class="small-content course">{{ user.course }}</div>
+            </div>
+            <div class="col s3">
+                <div class="small-title">STREAM</div>
+
+                <div class="small-content stream">{{ user.stream }}</div>
+
+            </div>
+            <div class="col s3">
+                <div class="small-title">YEAR OF ADMISSION</div>
+
+                <div class="small-contenty yoa">{{ user.year_of_admission }}</div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card-action">
+        <div class="row">
+            <div class="col s12">
+
+                <div class="input-field col s6">
+                    <input placeholder="Email-Id" id="last_name" type="text" class="validate editField email-id" readonly ng-model="user.email">
+                    <label for="last_name">Email ID</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <input placeholder="phone number" id="last_name" type="text" class="validate editField phone" readonly ng-model="user.phone">
+                    <label for="last_name">Phone</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-action">
+        <a class="proceed-to-feedback btn waves-effect waves-light" ng-click="feedbackProcess()">
+            PROCEED TO FEEDBACK PROCESS
+        </a>
+    </div>
+</div>
+</div>
+</div>
