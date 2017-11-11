@@ -25,6 +25,7 @@ if(req.query.college_name==null||req.query.enrollment_no==null||req.query.email=
 				console.log(req.query.enrollment_no.substr(10,12));
 				console.log(req.query);
 				var tablename = req.query.college_name + '_' + req.query.type + '_' + year;
+				console.log(tablename);
 				var random = Math.floor(Math.random()*(98989 - 12345 + 1) + 12345 );
 				var query  = ' update '+ tablename +' set password = ' +random.toString() +
 							 ', email= ? ' +
@@ -185,7 +186,7 @@ dashboard:function(req,res) {
 					semester: 	Number(req.query.semester)
 				};
 				if(process.env.year=='2017')
-				var tablename1 		= college_name + '_subject_allocation' + process.env.year ;	
+				var tablename1 		= college_name + '_subject_allocation_' + process.env.year ;	
 				var query = ' select s.feedback_id,s.batch_id,s.subject_code,s.instructor_code, ' +
 				            ' s.subject_name,s.type,b.course,b.stream,b.semester,t.name as teacher '+
 							' from ' 	   + tablename1 + ' as s ' +
@@ -213,8 +214,9 @@ dashboard:function(req,res) {
 	},
 
 	feedback:function(req,res) {
-
-
+		
+		//res.send(req.body);
+		console.log(req.body);
 		var tablename = req.body.college_name + '_feedback_' + process.env.year;
 		var feedbacks = req.body.teacherFeedback;
 
@@ -226,9 +228,11 @@ dashboard:function(req,res) {
 		else
 		{
 
+			 		var error=0;
 			 		async.each(feedbacks,function(feedback,callback) {
+					console.log(feedback);
 					var result = feedback.score;
-					if(result.length==15&&feedback.feedback_id!=null)
+					if(result.length==15&&feedback.feedbackId!=null)
 						{  
 							var query='update '+ tablename+' set'+
 							   ' at_1 = concat(at_1,?),  at_2 = concat(at_2,?),  at_3 = concat(at_3,?), '  +
@@ -249,18 +253,18 @@ dashboard:function(req,res) {
 						sum=sum+Number(result[i]);
 													}
 					};
-					con.query(query,[result[0],result[1],result[2],result[3],result[4],result[5],result[6],result[7],result[8],result[9],result[10],result[11],result[12],result[13],result[14],sum],function(err,result){
+					con.query(query,[result[0],result[1],result[2],result[3],result[4],result[5],result[6],result[7],result[8],result[9],result[10],result[11],result[12],result[13],result[14],sum],function(err,Result){
 						if(err)
 							console.log(err);
 						else{
-							console.log("feedback id " +feedback.feedback_id + ' of length '+ result.length +' updated ')
+							console.log("feedback id " +feedback.feedbackId + ' of length '+ result.length +' updated ')
 						
 						}
 					})
 
 
 						}
-						else if(result.length==8&&feedback.feedback_id!=null)
+						else if(result.length==8&&feedback.feedbackId!=null)
 						{
 							var query='update '+ tablename+' set'+
 							   ' at_1 = concat(at_1,?),  at_2 = concat(at_2,?),  at_3 = concat(at_3,?), '  +
@@ -281,23 +285,23 @@ dashboard:function(req,res) {
 										}
 					};
 
-					con.query(query,[result[0],result[1],result[2],result[3],result[4],result[5],result[6],result[7],sum],function(err,result){
+					con.query(query,[result[0],result[1],result[2],result[3],result[4],result[5],result[6],result[7],sum],function(err,Result){
 						if(err)
 							console.log(err);
 						else{
-						  console.log("feedback id " +feedback.feedback_id + ' of length ' + result.length + ' updated ')
+						  console.log("feedback id " +feedback.feedbackId + ' of length ' + result.length + ' updated ')
 						
 						}
 					})
 						}
 						else{
-							console.log("Error at processing feedback of id : " + feedback.feedback_id  + ' of length ' + result.length );
-							res.send("400");
+							console.log("Error at processing feedback of id : " + feedback.feedbackId  + ' of length ' + result.length );
+							error=1;
 						}
 
 					callback();
 					}, function(err) {
-						if (err){
+						 if (err){
 							console.error(err);
 							res.status(err);
 						}
@@ -315,7 +319,7 @@ dashboard:function(req,res) {
 								  from: process.env.email,
 								  to: req.body.email,   //Require user email at last as well
 								  subject: 'Noreply@ffs',
-								  text: 'Thank You For Your feedback.'
+								  text: 'Thank You For Your feedback. Your feedback has been recorded .'
 								};
 
 								transporter.sendMail(mailOptions, function(error, info){

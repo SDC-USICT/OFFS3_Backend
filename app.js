@@ -40,8 +40,8 @@ app.use("/", routes);
 //middleware
 
 
-app.listen(3000,function(){
-	console.log("Listening On port " + 3000);
+app.listen(8080,function(){
+	console.log("Listening On port " + 8080);
 })
 
 
